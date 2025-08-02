@@ -1,7 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { createArticleSchema, updateArticleSchema } from '@/validations/articles/article.validation';
-import {  updateArticleService, deleteArticleService, createArticleService } from '@/services/articles/article.service';
+import {  updateArticleService, deleteArticleService, createArticleService, getAllArticlesService} from '@/services/articles/article.service';
+
+export async function getAllArticlesController(req: NextRequest) {
+  try {
+    const articles = await getAllArticlesService();
+
+    return NextResponse.json({ success: true, data: articles });
+  } catch (error) {
+    console.error('Error al obtener artículos:', error);
+    return NextResponse.json({ success: false, error: 'Error del servidor' }, { status: 500 });
+  }
+}
 
 export async function createArticleController(req: NextRequest) {
   try {

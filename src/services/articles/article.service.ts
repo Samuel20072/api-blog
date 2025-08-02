@@ -7,16 +7,30 @@ interface CreateArticleDTO {
   authorId: number;
 }
 
+// Crear artículo
 export async function createArticleService({ title, content, imageUrl, authorId }: CreateArticleDTO) {
   const sql = `
     INSERT INTO articles (title, content, image_url, author_id)
     VALUES (?, ?, ?, ?)
   `;
-
   const values = [title, content, imageUrl || null, authorId];
-
   await db.query(sql, values);
 }
+
+// Obtener todos los artículos
+export async function getAllArticlesService() {
+  const sql = `
+    SELECT 
+      a.id, a.title, a.content, a.image_url as imageUrl, a.author_id as authorId,
+      u.name as authorName
+    FROM articles a
+    JOIN users u ON u.id = a.author_id
+    ORDER BY a.created_at DESC
+  `;
+  const [rows] = await db.query(sql);
+  return rows;
+}
+
 // Actualizar artículo
 export async function updateArticleService(id: number, data: Partial<CreateArticleDTO>) {
   const fields = [];

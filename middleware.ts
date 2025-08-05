@@ -1,4 +1,4 @@
-// middleware.ts (en la raíz del proyecto)
+
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
@@ -13,7 +13,6 @@ export function middleware(request: NextRequest) {
   return response;
 }
 
-// Aplica el middleware solo a las rutas de la API
 export const config = {
   matcher: '/api/:path*',
 };

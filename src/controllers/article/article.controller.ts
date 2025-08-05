@@ -7,7 +7,7 @@ export async function getAllArticlesController(req: NextRequest) {
   try {
     const articles = await getAllArticlesService();
 
-    return NextResponse.json({ success: true, data: articles });
+    return NextResponse.json({ success: true, data: articles }, { status: 200});
   } catch (error) {
     console.error('Error al obtener artículos:', error);
     return NextResponse.json({ success: false, error: 'Error del servidor' }, { status: 500 });
